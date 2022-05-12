@@ -1,0 +1,44 @@
+server:
+  port: 8882
+eureka:
+  client:
+#    registryWithEureka: true
+#    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8881/eureka/
+#    instance:
+#      hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ws-historico
+          uri: http://localhost:8087/historicos
+          predicates:
+            - Path=/historicos/**
+        - id: ws-customer
+          uri: http://localhost:8083/customers
+          predicates:
+            - Path=/customers/**
+        - id: ws-product
+          uri: http://localhost:8084/products
+          predicates:
+            - Path=/products/**
+        - id: ws-type-product
+          uri: http://localhost:8086/type-products
+          predicates:
+            - Path=/type-products/**
+        - id: ws-type-customer
+          uri: http://localhost:8082/type-customers
+          predicates:
+            - Path=/type-customers/**
+        - id: ws-admin
+          uri: http://localhost:8085/servicios
+          predicates:
+            - Path=/servicios/** 
+  #application:
+  #  name: registry-service          
